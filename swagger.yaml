@@ -193,6 +193,14 @@
                         }
                     },
                     {
+                        "name": "HostCPF",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "GuestCPF",
                         "in": "header",
                         "required": true,
@@ -225,12 +233,22 @@
                 }
             }
         },
-        "/accommodations/register/accommodation": {
+        "/accommodations/register/accommodation/{cpf}": {
             "post": {
                 "tags": [
                     "accommodation-controller"
                 ],
                 "operationId": "saveAccommodation",
+                "parameters": [
+                    {
+                        "name": "cpf",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -247,7 +265,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Accommodation"
+                                    "$ref": "#/components/schemas/GuestAccommodations"
                                 }
                             }
                         }
@@ -289,6 +307,26 @@
                             "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Accommodation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/test": {
+            "get": {
+                "tags": [
+                    "guest-controller"
+                ],
+                "operationId": "test",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -640,6 +678,7 @@
                     "bookingDuration",
                     "endDate",
                     "guest",
+                    "host",
                     "id",
                     "startDate",
                     "status",
@@ -680,8 +719,33 @@
                     "guest": {
                         "$ref": "#/components/schemas/Guest"
                     },
+                    "host": {
+                        "$ref": "#/components/schemas/Guest"
+                    },
                     "accommodation": {
                         "$ref": "#/components/schemas/Accommodation"
+                    }
+                }
+            },
+            "GuestAccommodations": {
+                "required": [
+                    "accommodations",
+                    "guest"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "guest": {
+                        "$ref": "#/components/schemas/Guest"
+                    },
+                    "accommodations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Accommodation"
+                        }
                     }
                 }
             }
