@@ -11,27 +11,17 @@
         }
     ],
     "paths": {
-        "/customers/update/{cpf}": {
-            "put": {
+        "/products": {
+            "post": {
                 "tags": [
-                    "guest-controller"
+                    "product-controller"
                 ],
-                "operationId": "updateGuest",
-                "parameters": [
-                    {
-                        "name": "cpf",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "operationId": "createProduct",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Guest"
+                                "$ref": "#/components/schemas/ProductModel"
                             }
                         }
                     },
@@ -43,7 +33,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Guest"
+                                    "$ref": "#/components/schemas/ProductModel"
                                 }
                             }
                         }
@@ -51,42 +41,12 @@
                 }
             }
         },
-        "/accommodations/update/policy": {
-            "put": {
+        "/contacts": {
+            "get": {
                 "tags": [
-                    "accommodation-controller"
+                    "contact-controller"
                 ],
-                "operationId": "updatedPolicyRuleOnAccommodation",
-                "parameters": [
-                    {
-                        "name": "idAccommodation",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    },
-                    {
-                        "name": "idPolicy",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DiscountPolicy"
-                            }
-                        }
-                    },
-                    "required": true
-                },
+                "operationId": "getAllContacts",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -95,7 +55,211 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/DiscountPolicy"
+                                        "$ref": "#/components/schemas/ContactModel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "contact-controller"
+                ],
+                "operationId": "createContact",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ContactModel"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ContactModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "categories-controller"
+                ],
+                "operationId": "getAllCategories",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "categories-controller"
+                ],
+                "operationId": "createCategorie",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryModel"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/{name_category}/{id_product}": {
+            "post": {
+                "tags": [
+                    "categories-controller"
+                ],
+                "operationId": "insertProductsInCategories",
+                "parameters": [
+                    {
+                        "name": "name_category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id_product",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/carousel": {
+            "get": {
+                "tags": [
+                    "carousel-controller"
+                ],
+                "operationId": "getAllCarousel",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DataResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "carousel-controller"
+                ],
+                "operationId": "createCarousel",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarouselModel"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DataResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/product": {
+            "get": {
+                "tags": [
+                    "product-controller"
+                ],
+                "operationId": "getProductsWithQuery",
+                "parameters": [
+                    {
+                        "name": "featured",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "promotion",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductModel"
                                     }
                                 }
                             }
@@ -104,229 +268,19 @@
                 }
             }
         },
-        "/accommodations/update/accommodation/{id}": {
-            "put": {
-                "tags": [
-                    "accommodation-controller"
-                ],
-                "operationId": "updateAccommodation",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Accommodation"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Accommodation"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/customers/register/guest": {
-            "post": {
-                "tags": [
-                    "guest-controller"
-                ],
-                "summary": "Register a guest",
-                "operationId": "saveGuest",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Guest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Guest"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/bookings/register/booking": {
-            "post": {
-                "tags": [
-                    "booking-controller"
-                ],
-                "operationId": "saveBooking",
-                "parameters": [
-                    {
-                        "name": "AccommodationId",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    },
-                    {
-                        "name": "HostCPF",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "GuestCPF",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/BookingRequestDTO"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Booking"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/accommodations/register/accommodation/{cpf}": {
-            "post": {
-                "tags": [
-                    "accommodation-controller"
-                ],
-                "operationId": "saveAccommodation",
-                "parameters": [
-                    {
-                        "name": "cpf",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Accommodation"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/GuestAccommodations"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/accommodations/insert/policy/{id}": {
-            "patch": {
-                "tags": [
-                    "accommodation-controller"
-                ],
-                "operationId": "insertPolicyRuleOnAccommodation",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DiscountPolicy"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Accommodation"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/customers/test": {
+        "/home": {
             "get": {
                 "tags": [
-                    "guest-controller"
+                    "home-controller"
                 ],
-                "operationId": "test",
+                "operationId": "getHome",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "type": "string"
+                                    "$ref": "#/components/schemas/HomeRecord"
                                 }
                             }
                         }
@@ -334,158 +288,12 @@
                 }
             }
         },
-        "/customers/search/{cpf}": {
-            "get": {
-                "tags": [
-                    "guest-controller"
-                ],
-                "operationId": "findGuest",
-                "parameters": [
-                    {
-                        "name": "cpf",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Guest"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/bookings/search/booking": {
-            "get": {
-                "tags": [
-                    "booking-controller"
-                ],
-                "operationId": "findBooking",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Booking"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/accommodations/search/accommodation/{id}": {
-            "get": {
-                "tags": [
-                    "accommodation-controller"
-                ],
-                "operationId": "findAccommodation",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Accommodation"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/customers/delete/{cpf}": {
+        "/carousel/{id}": {
             "delete": {
                 "tags": [
-                    "guest-controller"
+                    "carousel-controller"
                 ],
-                "operationId": "deleteGuest",
-                "parameters": [
-                    {
-                        "name": "cpf",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/accommodations/delete/policy": {
-            "delete": {
-                "tags": [
-                    "accommodation-controller"
-                ],
-                "operationId": "deletePolicyRuleOnAccommodation",
-                "parameters": [
-                    {
-                        "name": "idPolicy",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/accommodations/delete/accommodation/{id}": {
-            "delete": {
-                "tags": [
-                    "accommodation-controller"
-                ],
-                "operationId": "deleteAccommodation",
+                "operationId": "deleteCarousel",
                 "parameters": [
                     {
                         "name": "id",
@@ -503,7 +311,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "type": "string"
+                                    "$ref": "#/components/schemas/DataResponse"
                                 }
                             }
                         }
@@ -514,237 +322,170 @@
     },
     "components": {
         "schemas": {
-            "Address": {
-                "required": [
-                    "bairro",
-                    "cep",
-                    "localidade",
-                    "logradouro",
-                    "numero",
-                    "uf"
-                ],
+            "ProductModel": {
                 "type": "object",
                 "properties": {
                     "id": {
                         "type": "integer",
                         "format": "int64"
                     },
-                    "logradouro": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "image_url": {
+                        "type": "string"
+                    },
+                    "descrição": {
+                        "type": "string"
+                    },
+                    "em_destaque": {
+                        "type": "boolean"
+                    },
+                    "em_promoção": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "AddressModel": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "cep": {
+                        "type": "string"
+                    },
+                    "estado": {
+                        "type": "string"
+                    },
+                    "cidade": {
+                        "type": "string"
+                    },
+                    "lograuro": {
                         "type": "string"
                     },
                     "numero": {
                         "type": "string"
                     },
-                    "complemento": {
-                        "type": "string"
-                    },
                     "bairro": {
                         "type": "string"
                     },
-                    "localidade": {
-                        "type": "string"
-                    },
-                    "uf": {
-                        "type": "string"
-                    },
-                    "cep": {
+                    "complemento": {
                         "type": "string"
                     }
                 }
             },
-            "Guest": {
-                "required": [
-                    "address",
-                    "birthDate",
-                    "cpf",
-                    "email",
-                    "host",
-                    "lastName",
-                    "name",
-                    "phoneNumber",
-                    "responsible"
-                ],
-                "type": "object",
-                "properties": {
-                    "cpf": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "lastName": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "phoneNumber": {
-                        "type": "string"
-                    },
-                    "birthDate": {
-                        "type": "string"
-                    },
-                    "responsible": {
-                        "type": "boolean"
-                    },
-                    "host": {
-                        "type": "boolean"
-                    },
-                    "address": {
-                        "$ref": "#/components/schemas/Address"
-                    }
-                }
-            },
-            "DiscountPolicy": {
-                "required": [
-                    "discountPercentage",
-                    "id",
-                    "policyType"
-                ],
-                "type": "object",
-                "properties": {
-                    "policyType": {
-                        "type": "string"
-                    },
-                    "discountPercentage": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "id": {
-                        "type": "integer",
-                        "format": "int64"
-                    }
-                }
-            },
-            "Accommodation": {
-                "required": [
-                    "address",
-                    "basePrice",
-                    "capacity",
-                    "get_discountPolicy",
-                    "type"
-                ],
+            "ContactModel": {
                 "type": "object",
                 "properties": {
                     "id": {
                         "type": "integer",
                         "format": "int64"
                     },
-                    "type": {
+                    "telefone_fixo": {
                         "type": "string"
                     },
-                    "localization": {
+                    "telefone_celular": {
                         "type": "string"
                     },
-                    "capacity": {
+                    "telefone_ouvidoria": {
+                        "type": "string"
+                    },
+                    "e-mail": {
+                        "type": "string"
+                    },
+                    "endereco": {
+                        "$ref": "#/components/schemas/AddressModel"
+                    }
+                }
+            },
+            "CategoryModel": {
+                "type": "object",
+                "properties": {
+                    "id": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int64"
                     },
-                    "basePrice": {
-                        "type": "number",
-                        "format": "double"
+                    "nome": {
+                        "type": "string"
                     },
-                    "address": {
-                        "$ref": "#/components/schemas/Address"
+                    "image_url": {
+                        "type": "string"
                     },
-                    "get_discountPolicy": {
+                    "descrição": {
+                        "type": "string"
+                    },
+                    "produtos": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/DiscountPolicy"
+                            "$ref": "#/components/schemas/ProductModel"
                         }
                     }
                 }
             },
-            "BookingRequestDTO": {
-                "required": [
-                    "endDate",
-                    "startDate"
-                ],
-                "type": "object",
-                "properties": {
-                    "startDate": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "endDate": {
-                        "type": "string",
-                        "format": "date"
-                    }
-                }
-            },
-            "Booking": {
-                "required": [
-                    "accommodation",
-                    "bookingDuration",
-                    "endDate",
-                    "guest",
-                    "host",
-                    "id",
-                    "startDate",
-                    "status",
-                    "totalPrice"
-                ],
+            "CarouselModel": {
                 "type": "object",
                 "properties": {
                     "id": {
                         "type": "integer",
                         "format": "int64"
                     },
-                    "startDate": {
-                        "type": "string",
-                        "format": "date"
+                    "image_url": {
+                        "type": "string"
                     },
-                    "endDate": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "status": {
-                        "type": "string",
-                        "enum": [
-                            "Reserva pendente",
-                            "Reserva confirmada",
-                            "Reserva em andamento",
-                            "Reserva cancelada",
-                            "Reserva concluída"
-                        ]
-                    },
-                    "bookingDuration": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "totalPrice": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "guest": {
-                        "$ref": "#/components/schemas/Guest"
-                    },
-                    "host": {
-                        "$ref": "#/components/schemas/Guest"
-                    },
-                    "accommodation": {
-                        "$ref": "#/components/schemas/Accommodation"
+                    "url_redirect": {
+                        "type": "string"
                     }
                 }
             },
-            "GuestAccommodations": {
-                "required": [
-                    "accommodations",
-                    "guest"
-                ],
+            "DataResponse": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int64"
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            },
+            "CategoryDTO": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
                     },
-                    "guest": {
-                        "$ref": "#/components/schemas/Guest"
+                    "imageUrl": {
+                        "type": "string"
                     },
-                    "accommodations": {
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "HomeRecord": {
+                "type": "object",
+                "properties": {
+                    "categorias": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/Accommodation"
+                            "$ref": "#/components/schemas/CategoryDTO"
+                        }
+                    },
+                    "produtos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProductModel"
+                        }
+                    },
+                    "carrossel": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CarouselModel"
+                        }
+                    },
+                    "contato": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ContactModel"
                         }
                     }
                 }
