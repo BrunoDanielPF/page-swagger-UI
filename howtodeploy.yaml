@@ -1,0 +1,16 @@
+name: nginx
+providers:
+  - render
+  - digitalocean
+  - docker
+  - flyio
+services:
+  - type: docker
+    name: nginx
+    dockerfile: |
+      FROM nginx
+    instance_count: 1
+    http_port: 80
+    health_check:
+      port: 80
+      http_path: /
