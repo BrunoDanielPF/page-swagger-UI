@@ -82,7 +82,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "type": "object"
+                                    "type": "string"
                                 }
                             }
                         }
@@ -236,7 +236,7 @@
                 },
                 "security": [
                     {
-                        "Authorization": []
+                        "basicScheme": []
                     }
                 ]
             }
@@ -287,7 +287,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/contact": {
@@ -335,7 +340,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/categories": {
@@ -383,7 +393,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/categories/{nameCategory}": {
@@ -459,7 +474,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             },
             "patch": {
                 "tags": [
@@ -497,7 +517,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/categories/{nameCategory}/{idProduct}": {
@@ -536,7 +561,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/carousel": {
@@ -603,7 +633,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/products/{productId}": {
@@ -644,7 +679,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/users/auth": {
@@ -652,7 +692,7 @@
                 "tags": [
                     "auth-controller"
                 ],
-                "operationId": "getUser",
+                "operationId": "getUserWithParam",
                 "parameters": [
                     {
                         "name": "email",
@@ -686,7 +726,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -791,7 +831,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/contact/{id}": {
@@ -822,7 +867,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/categories/{idCategory}": {
@@ -853,7 +903,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         },
         "/carousel/{id}": {
@@ -884,7 +939,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicScheme": []
+                    }
+                ]
             }
         }
     },
@@ -1182,6 +1242,41 @@
                     },
                     "descrição": {
                         "type": "string"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "e-mail": {
+                        "type": "string"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    },
+                    "imagem": {
+                        "$ref": "#/components/schemas/Image"
+                    },
+                    "criado_em": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "atualizado_em": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cargo": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Role"
+                        }
                     }
                 }
             },
