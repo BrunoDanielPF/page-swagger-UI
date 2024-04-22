@@ -11,6 +11,55 @@
         }
     ],
     "paths": {
+        "/users/auth/{email}": {
+            "post": {
+                "tags": [
+                    "auth-controller"
+                ],
+                "operationId": "insertImageOnUser",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/auth/signup": {
             "post": {
                 "tags": [
@@ -21,7 +70,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "$ref": "#/components/schemas/UserRequest"
                             }
                         }
                     },
@@ -113,6 +162,8 @@
                         "in": "query",
                         "required": true,
                         "schema": {
+                            "maximum": 31,
+                            "minimum": 1,
                             "type": "integer",
                             "format": "int32"
                         }
@@ -122,6 +173,8 @@
                         "in": "query",
                         "required": false,
                         "schema": {
+                            "maximum": 12,
+                            "minimum": 1,
                             "type": "integer",
                             "format": "int32"
                         }
@@ -131,6 +184,8 @@
                         "in": "query",
                         "required": false,
                         "schema": {
+                            "maximum": 2400,
+                            "minimum": 2023,
                             "type": "integer",
                             "format": "int32"
                         }
@@ -142,7 +197,10 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "type": "object"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductResponse"
+                                    }
                                 }
                             }
                         }
@@ -183,22 +241,68 @@
                 ]
             }
         },
-        "/contacts": {
-            "get": {
+        "/products/{productID}": {
+            "post": {
                 "tags": [
-                    "contact-controller"
+                    "product-controller"
                 ],
-                "operationId": "getAllContacts",
+                "operationId": "insertImageOnProduct",
+                "parameters": [
+                    {
+                        "name": "productID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Contact"
-                                    }
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contact": {
+            "get": {
+                "tags": [
+                    "contact-controller"
+                ],
+                "operationId": "getContact",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Contact"
                                 }
                             }
                         }
@@ -282,6 +386,120 @@
                 }
             }
         },
+        "/categories/{nameCategory}": {
+            "get": {
+                "tags": [
+                    "categories-controller"
+                ],
+                "operationId": "getCategoryByName",
+                "parameters": [
+                    {
+                        "name": "nameCategory",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "categories-controller"
+                ],
+                "operationId": "insertImageOnCategory",
+                "parameters": [
+                    {
+                        "name": "nameCategory",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "categories-controller"
+                ],
+                "operationId": "updateCategories",
+                "parameters": [
+                    {
+                        "name": "nameCategory",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoriesRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/categories/{nameCategory}/{idProduct}": {
             "post": {
                 "tags": [
@@ -345,11 +563,30 @@
                     "carousel-controller"
                 ],
                 "operationId": "createCarousel",
+                "parameters": [
+                    {
+                        "name": "url",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Carousel"
+                                "required": [
+                                    "file"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
                             }
                         }
                     },
@@ -410,50 +647,39 @@
                 }
             }
         },
-        "/categories/{nameCategory}": {
+        "/users/auth": {
             "get": {
                 "tags": [
-                    "categories-controller"
+                    "auth-controller"
                 ],
-                "operationId": "getCategoryByName",
+                "operationId": "getUser",
                 "parameters": [
                     {
-                        "name": "nameCategory",
-                        "in": "path",
-                        "required": true,
+                        "name": "email",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
                         "schema": {
                             "type": "string"
                         }
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "categories-controller"
-                ],
-                "operationId": "updateCategories",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CategoriesRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -473,7 +699,7 @@
                 "tags": [
                     "product-controller"
                 ],
-                "operationId": "getProductsPublishedWithQuery",
+                "operationId": "getProductsWithSpecification",
                 "parameters": [
                     {
                         "name": "featured",
@@ -543,6 +769,37 @@
                     "product-controller"
                 ],
                 "operationId": "deleteProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contact/{id}": {
+            "delete": {
+                "tags": [
+                    "contact-controller"
+                ],
+                "operationId": "deleteContact",
                 "parameters": [
                     {
                         "name": "id",
@@ -645,28 +902,19 @@
                     }
                 }
             },
-            "User": {
+            "UserRequest": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "username": {
+                    "e-mail": {
                         "type": "string"
                     },
-                    "password": {
+                    "nome": {
                         "type": "string"
                     },
-                    "createdOn": {
-                        "type": "string",
-                        "format": "date-time"
+                    "senha": {
+                        "type": "string"
                     },
-                    "lastUpdatedOn": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "roles": {
+                    "cargo": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/Role"
@@ -675,12 +923,16 @@
                 }
             },
             "AuthenticationDTO": {
+                "required": [
+                    "e-mail",
+                    "senha"
+                ],
                 "type": "object",
                 "properties": {
-                    "email": {
+                    "e-mail": {
                         "type": "string"
                     },
-                    "password": {
+                    "senha": {
                         "type": "string"
                     }
                 }
@@ -689,9 +941,6 @@
                 "type": "object",
                 "properties": {
                     "nome": {
-                        "type": "string"
-                    },
-                    "image_url": {
                         "type": "string"
                     },
                     "descrição": {
@@ -705,6 +954,40 @@
                     }
                 }
             },
+            "Image": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "altura": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "largura": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "dados": {
+                        "type": "string"
+                    },
+                    "extensão": {
+                        "type": "string"
+                    },
+                    "criado_em": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "atualizado_em": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
             "ProductResponse": {
                 "type": "object",
                 "properties": {
@@ -715,8 +998,8 @@
                     "nome": {
                         "type": "string"
                     },
-                    "image_url": {
-                        "type": "string"
+                    "imagem": {
+                        "$ref": "#/components/schemas/Image"
                     },
                     "descrição": {
                         "type": "string"
@@ -787,9 +1070,11 @@
                         "format": "int64"
                     },
                     "telefone_fixo": {
+                        "pattern": "\\+\\d{2}\\(\\d{2}\\)\\d{4}-\\d{4}",
                         "type": "string"
                     },
                     "telefone_celular": {
+                        "pattern": "\\+\\d{11,}",
                         "type": "string"
                     },
                     "telefone_ouvidoria": {
@@ -801,11 +1086,11 @@
                     "endereco": {
                         "$ref": "#/components/schemas/Address"
                     },
-                    "createdOn": {
+                    "criado_em": {
                         "type": "string",
                         "format": "date-time"
                     },
-                    "lastUpdatedOn": {
+                    "atualizado_em": {
                         "type": "string",
                         "format": "date-time"
                     }
@@ -829,8 +1114,8 @@
                     "nome": {
                         "type": "string"
                     },
-                    "image_url": {
-                        "type": "string"
+                    "imagem": {
+                        "$ref": "#/components/schemas/Image"
                     },
                     "descrição": {
                         "type": "string"
@@ -853,8 +1138,8 @@
                     "name": {
                         "type": "string"
                     },
-                    "imageUrl": {
-                        "type": "string"
+                    "image": {
+                        "$ref": "#/components/schemas/Image"
                     },
                     "description": {
                         "type": "string"
@@ -881,29 +1166,6 @@
                     }
                 }
             },
-            "Carousel": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "createdOn": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "lastUpdatedOn": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "image_url": {
-                        "type": "string"
-                    },
-                    "url_redirect": {
-                        "type": "string"
-                    }
-                }
-            },
             "DataResponse": {
                 "type": "object",
                 "properties": {
@@ -915,14 +1177,34 @@
             "CategoriesRequest": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "nome": {
                         "type": "string"
                     },
-                    "imageUrl": {
+                    "descrição": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Carousel": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "imagem": {
+                        "$ref": "#/components/schemas/Image"
+                    },
+                    "redirecionamento_url": {
                         "type": "string"
                     },
-                    "description": {
-                        "type": "string"
+                    "criado_em": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "atualizado_em": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
@@ -932,8 +1214,8 @@
                     "name": {
                         "type": "string"
                     },
-                    "imageUrl": {
-                        "type": "string"
+                    "image": {
+                        "$ref": "#/components/schemas/Image"
                     },
                     "description": {
                         "type": "string"
