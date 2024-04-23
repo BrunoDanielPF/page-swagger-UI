@@ -1,1 +1,1 @@
-url = https://brunodanielpf.github.io/page-swagger-UI-aluguel-por-temporada/#/
+
